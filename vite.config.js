@@ -10,12 +10,13 @@ export default defineConfig({
     assetsDir: 'assets',
     rollupOptions: {
       output: {
-        // Enable code splitting for large components
+        // Safer code splitting for large components
         manualChunks(id) {
           if (id.includes('node_modules')) {
             return id.toString().split('node_modules/')[1].split('/')[0].toString();
           }
-          if (id.includes('src/components/')) {
+          // Only split known .vue files in components folder
+          if (id.includes('src/components/') && id.endsWith('.vue')) {
             const name = id.split('src/components/')[1].split('.')[0];
             if ([
               'About',
@@ -31,7 +32,7 @@ export default defineConfig({
               return `component-${name}`;
             }
           }
-        }
+        },
       }
     }
   }
