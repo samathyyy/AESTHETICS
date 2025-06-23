@@ -25,7 +25,10 @@
     <div class="services-list-vertical">
       <div class="service-row animated-service" v-for="(service, i) in services" :key="service.title" :id="'service-' + i" :class="{ 'reverse': i % 2 === 1 }">
         <div class="service-image-block">
-          <img v-if="service.img" :src="service.img" :alt="service.title" class="service-img-large" loading="lazy" />
+          <picture>
+            <source :srcset="service.img.replace(/\.(jpg|jpeg|png)$/i, '.webp')" type="image/webp" />
+            <img :src="service.img" :alt="service.title" class="service-img-large" loading="lazy" />
+          </picture>
         </div>
         <div class="service-info-block">
           <h3 class="service-title">{{ service.title }}</h3>
@@ -136,55 +139,55 @@ export default {
   components: { MainFooter },
   data() {
     // Helper to resolve local images for Vite
-    const localImage = (path) => new URL(path, import.meta.url).href;
+    const localImage = (filename) => new URL(`../assets/images/${filename}`, import.meta.url).href;
     return {
       services: [
         {
           title: 'Consultation',
           desc: 'Expert advice for your brand’s growth and sustainability.',
-          img: localImage('../assets/images/afro-american-man-suit-holding-documents-talking-female-boss.jpg'),
+          img: localImage('afro-american-man-suit-holding-documents-talking-female-boss.jpg'),
           detailDesc: 'With our years of experience and wealth of knowledge in branding, we are confident with the quality of results our clients have generated so far from our guide. We guide, and consult for companies, organisations and individuals on the best branding approach and strategies to adopt to influence the growth, reputation and sustainability of their enterprise.',
           link: '#contact',
         },
         {
           title: 'Visual Identity',
           desc: 'Crafting unique logos, color palettes, and brand visuals.',
-          img: localImage('../assets/images/designed-stationery-business-visiting-card.jpg'),
+          img: localImage('designed-stationery-business-visiting-card.jpg'),
           detailDesc: 'We create memorable visual identities that capture your brand’s essence and make a lasting impression. From logo design to color schemes and typography, we ensure every element reflects your vision and values.',
           link: '#contact',
         },
         {
           title: 'Product Package Design',
           desc: 'Attractive, functional packaging for your products.',
-          img: localImage('../assets/images/3514341.jpg'),
+          img: localImage('3514341.jpg'),
           detailDesc: 'Our team designs packaging that not only protects your product but also stands out on the shelf. We blend creativity and practicality to deliver packaging that enhances your brand and attracts customers.',
           link: '#contact',
         },
         {
           title: 'Company Profile',
           desc: 'Professional company profiles that tell your story.',
-          img: localImage('../assets/images/9313161.jpg'),
+          img: localImage('9313161.jpg'),
           detailDesc: 'We develop compelling company profiles that communicate your mission, vision, and achievements. Our profiles help you connect with stakeholders and build trust in your brand.',
           link: '#contact',
         },
         {
           title: 'Marketing & Brand Collateral',
           desc: 'Brochures, flyers, and all marketing materials you need.',
-          img: localImage('../assets/images/map-lying-wooden-table.jpg'),
+          img: localImage('map-lying-wooden-table.jpg'),
           detailDesc: 'From brochures to flyers and digital ads, we design marketing collateral that amplifies your message and drives engagement. Every piece is tailored to your brand and audience.',
           link: '#contact',
         },
         {
           title: 'Web Design & Management',
           desc: 'Modern, responsive websites for your business.',
-          img: localImage('../assets/images/ui-ux-representations-with-laptop.jpg'),
+          img: localImage('ui-ux-representations-with-laptop.jpg'),
           detailDesc: 'We build and manage websites that are visually stunning, user-friendly, and optimized for all devices. Our web solutions help you reach more customers and grow your online presence.',
           link: '#contact',
         },
         {
           title: 'Environmental Branding',
           desc: 'Transforming spaces to reflect your brand identity.',
-          img: localImage('../assets/images/6022536.jpg'),
+          img: localImage('6022536.jpg'),
           detailDesc: 'We design branded environments that immerse your audience in your story. From office spaces to retail locations, we create experiences that leave a lasting impact.',
           link: '#contact',
         },
@@ -782,7 +785,7 @@ export default {
   border-radius: 1.5rem;
   max-width: 540px;
   width: 90vw;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37), 0 1.5px 8px 0 rgba(255, 183, 0, 0.13), 0 0 0 4px rgba(255,255,255,0.08);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37), 0 1.5px 8px 0 rgba(255, 183, 0, 0.18);
   border: 1.5px solid rgba(255,255,255,0.35);
   position: relative;
   overflow: hidden;
@@ -1318,7 +1321,7 @@ export default {
   border-radius: 1.5rem;
   max-width: 540px;
   width: 90vw;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37), 0 1.5px 8px 0 rgba(255, 183, 0, 0.13), 0 0 0 4px rgba(255,255,255,0.08);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37), 0 1.5px 8px 0 rgba(255, 183, 0, 0.18);
   border: 1.5px solid rgba(255,255,255,0.35);
   position: relative;
   overflow: hidden;
@@ -1854,7 +1857,8 @@ export default {
   border-radius: 1.5rem;
   max-width: 540px;
   width: 90vw;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37), 0 1.5px 8px 0 rgba(255, 183, 0, 0.13), 0 0 0 4px rgba(255,255,255,0.08);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37), 0 1.5px 8px 0 rgba(255, 183, 0, 0.18);
+ 
   border: 1.5px solid rgba(255,255,255,0.35);
   position: relative;
   overflow: hidden;

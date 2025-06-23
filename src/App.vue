@@ -1,5 +1,9 @@
 <template>
   <div class="main-layout">
+    <!-- Back Button: show on all pages except home, but absolutely position it so it does not overlap content -->
+    <button v-if="$route.path !== '/'" class="fixed-back-btn absolute-back-btn" @click="goBack" title="Go Back">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ffb300" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
     <div v-if="showSearchPopup" class="search-popup-overlay" @click.self="closeSearchPopup">
       <div class="search-popup">
         <input
@@ -122,12 +126,13 @@
     <router-view v-slot="{ Component }">
       <component :is="Component" />
     </router-view>
-    <div id="custom-cursor">
+    <!-- Removed custom cursor -->
+    <!-- <div id="custom-cursor">
       <svg class="cursor-svg" width="48" height="48">
         <circle class="cursor-svg-ring" cx="24" cy="24" r="18" />
       </svg>
       <div class="cursor-dot"></div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -184,8 +189,8 @@ export default {
   mounted() {
     this.isMobile = window.innerWidth <= 700;
     window.addEventListener('resize', this.checkMobile);
-    // Initialize custom cursor
-    this.initCustomCursor();
+    // Removed custom cursor initialization
+    // this.initCustomCursor();
   },
   methods: {
     checkMobile() {
@@ -347,17 +352,14 @@ export default {
       }
     },
     initCustomCursor() {
-      const cursor = document.getElementById('custom-cursor');
-      const cursorDot = cursor.querySelector('.cursor-dot');
-      const cursorRing = cursor.querySelector('.cursor-svg-ring');
-      
-      const moveCursor = (e) => {
-        const x = e.clientX;
-        const y = e.clientY;
-        cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-      };
-
-      document.addEventListener('mousemove', moveCursor);
+      // Removed custom cursor logic
+    },
+    goBack() {
+      if (window.history.length > 1) {
+        this.$router.back();
+      } else {
+        this.$router.push('/');
+      }
     }
   },
   beforeDestroy() {
@@ -967,6 +969,52 @@ mark {
   background: rgba(255, 184, 140, 0.08);
   border-radius: 50%;
 }
+.fixed-back-btn, .absolute-back-btn {
+  position: fixed;
+  top: 70px;
+  left: 18px;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(24,28,32,0.92);
+  border: none;
+  box-shadow: 0 2px 12px #000a;
+  transition: box-shadow 0.2s;
+  padding: 0;
+}
+.fixed-back-btn svg {
+  display: block;
+  width: 28px;
+  height: 28px;
+  stroke: #ffb300;
+  z-index: 130;
+}
+@media (max-width: 700px) {
+  .fixed-back-btn, .absolute-back-btn {
+    position: fixed;
+    top: 1.1rem;
+    left: 1.1rem;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: 50%;
+    background: rgba(24,28,32,0.98);
+    box-shadow: 0 2px 12px #000a;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .fixed-back-btn svg {
+    width: 28px;
+    height: 28px;
+    stroke: #ffb300;
+    display: block;
+    z-index: 130;
+  }
+}
 .float-back-btn {
   position: fixed;
   top: 2rem;
@@ -989,57 +1037,41 @@ mark {
 .back-btn:hover {
   background: #ffb300;
 }
-</style>
-
-<style>
-#custom-cursor {
-  position: fixed;
-  left: 0; top: 0;
-  pointer-events: none;
-  z-index: 9999;
-  mix-blend-mode: difference;
-}
-.cursor-dot {
-  width: 12px; height: 12px;
-  background: #fff;
+.absolute-back-btn {
+  position: absolute;
+  top: 90px;
+  left: 18px;
+  z-index: 300;
+  background: #181818ee;
+  border: none;
   border-radius: 50%;
-  position: absolute;
-  left: 0; top: 0;
-  box-shadow: 0 0 8px #ffb88c88, 0 0 0 2px #fff2 inset;
-  transition: background 0.18s, transform 0.18s cubic-bezier(.4,1.6,.6,1);
-  will-change: transform;
+  box-shadow: 0 2px 12px #ffb88c44;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.18s;
 }
-.cursor-dot.active {
-  background: #ff6f61;
-  transform: scale(1.3);
-}
-.cursor-svg {
-  position: absolute;
-  left: 0; top: 0;
-  width: 48px; height: 48px;
-  pointer-events: none;
-  transition: filter 0.18s;
-  filter: drop-shadow(0 0 8px #ffb88c88);
-  will-change: transform;
-}
-.cursor-svg-ring {
-  fill: none;
-  stroke: #ffb88c;
-  stroke-width: 2.5;
-  opacity: 0.85;
-  transition: stroke 0.18s, opacity 0.18s, r 0.18s cubic-bezier(.4,1.6,.6,1);
-}
-.cursor-svg-ring.active {
-  stroke: #ff6f61;
-  opacity: 1;
-  r: 22;
+.absolute-back-btn:hover {
+  background: #ffb300;
+  box-shadow: 0 4px 24px #ffb300aa;
+  transform: translateY(-2px) scale(1.08);
 }
 @media (max-width: 700px) {
-  #custom-cursor { display: none !important; }
+  .absolute-back-btn {
+    top: 70px;
+    left: 8px;
+    width: 40px;
+    height: 40px;
+  }
 }
 </style>
 
 <style>
+/* Removed custom cursor styles */
+/* #custom-cursor, .cursor-dot, .cursor-svg, .cursor-svg-ring { display: none !important; } */
 .minimal-loading {
   display: flex;
   align-items: center;

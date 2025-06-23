@@ -467,6 +467,12 @@ export default {
   }
   .blog-card {
     max-width: 98vw;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 8px 32px #2228, 0 2px 8px #ffb30022;
+    border: 1.5px solid #222;
+  }
+  .blog-card:last-child {
+    margin-bottom: 0;
   }
 }
 </style>
